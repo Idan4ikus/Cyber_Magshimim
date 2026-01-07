@@ -73,7 +73,7 @@ int Pawn::isValidMove(std::string curr, std::string dest)
     int colDiff = destCol - currCol;
 
     if ((colDiff == 1 || colDiff == -1) && rowDiff == direction)
-        return checkEat(curr, dest) ? 0 : 6;
+        return checkEat(curr, dest) == 0 ? 0 : 6;
 
     if (colDiff != 0)
         return 6;
@@ -108,5 +108,4 @@ int Pawn::checkEat(std::string curr, std::string dest)
 
     return 0; 
 }
-
 
