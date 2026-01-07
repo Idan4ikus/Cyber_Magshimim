@@ -181,8 +181,12 @@ bool Board::isCheck(int color,std::string curr, std::string dest)
             {
                 if (board[i][j]->color != color)
                 {
-                    int ret = (board[i][j]->isValidMove(curr,KP));
-                    return ret == 0;
+                    std::string pos = "";
+                    pos += (j + 'a');
+                    pos += (i + '1');
+                    int ret = (board[i][j]->isValidMove(pos,KP));
+                    if (ret == 0)
+                        return true;
 
                 }
             }

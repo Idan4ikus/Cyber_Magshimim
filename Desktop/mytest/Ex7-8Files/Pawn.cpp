@@ -65,10 +65,10 @@ int Pawn::isValidMove(std::string curr, std::string dest)
     int currCol = std::tolower(curr[0]) - 'a';
     int destCol = std::tolower(dest[0]) - 'a';
 
-    int currRow = '8' - curr[1];
-    int destRow = '8' - dest[1];
+    int currRow = curr[1] - '1';
+    int destRow = dest[1] - '1';
 
-    int direction = (color == 0) ? -1 : 1;
+    int direction = (color == 0) ? 1 : -1;
     int rowDiff = destRow - currRow;
     int colDiff = destCol - currCol;
 
@@ -108,6 +108,5 @@ int Pawn::checkEat(std::string curr, std::string dest)
 
     return 0; 
 }
-
 
 
