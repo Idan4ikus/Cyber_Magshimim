@@ -19,14 +19,6 @@ std::string Controller::menageMove(std::string cords)
 	resStr += (res + '0');
 	resStr += '\0';
 
-	if (bd->currPlayer == 0)
-	{
-		bd->currPlayer = 1;
-	}
-	else if (bd->currPlayer == 1)
-	{
-		bd->currPlayer = 0;
-	}
 	return convert(resStr);
 }
 
@@ -40,4 +32,3 @@ std::string Controller::convert(std::string meidan)
 
 	return res;
 }
-
