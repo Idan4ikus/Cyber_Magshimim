@@ -100,7 +100,8 @@ Board::Board()
 /// <returns></returns>
 Board Board::UpdateBoard(std::string curr, std::string dest)
 {  
-	if (isLegalMove(curr, dest) != 0 || isLegalMove(curr, dest) != 1 || isLegalMove(curr, dest) != 2)
+	int legalRes = isLegalMove(curr, dest);
+	if (legalRes != 0 && legalRes != 1)
 		return *this;
 
 	int srcCol = converter(curr[0]);
@@ -180,8 +181,12 @@ bool Board::isCheck(int color,std::string curr, std::string dest)
             {
                 if (board[i][j]->color != color)
                 {
-                    int ret = (board[i][j]->isValidMove(curr,KP));
-                    return ret == 0;
+                    std::string pos = "";
+                    pos += (j + 'a');
+                    pos += (i + '1');
+                    int ret = (board[i][j]->isValidMove(pos,KP));
+                    if (ret == 0)
+                        return true;
 
                 }
             }
