@@ -100,7 +100,8 @@ Board::Board()
 /// <returns></returns>
 Board Board::UpdateBoard(std::string curr, std::string dest)
 {  
-	if (isLegalMove(curr, dest) != 0 || isLegalMove(curr, dest) != 1 || isLegalMove(curr, dest) != 2)
+	int legalRes = isLegalMove(curr, dest);
+	if (legalRes != 0 && legalRes != 1)
 		return *this;
 
 	int srcCol = converter(curr[0]);
