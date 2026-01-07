@@ -29,7 +29,7 @@ int Bishop::isValidMove(std::string curr , std::string dest)
 	int row = currRow + stepRow;
 	int col = currCol + stepCol;
 
-	while (currRow != dstRow || currCol != dstCol)
+	while (row != dstRow || col != dstCol)
 	{
 		if (!bd->board[row][col]->isEmpty())
 			return 6;
