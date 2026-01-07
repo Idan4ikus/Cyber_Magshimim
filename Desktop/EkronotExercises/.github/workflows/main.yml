@@ -1,0 +1,319 @@
+# name: Ex0 - GIT and VS
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+
+#   build-pipeline-tools:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       ## Ignore building executable files that are already in cache ##
+          
+#       - uses: actions/cache@v3
+#         id: cache
+#         with:
+#           path: |
+#             filesverifier
+#             valgrindverifier
+#             clearscreen
+#             printMessage
+#             printbanner
+#             CodesToMessages.csv
+#           key: ${{ runner.os }}-test-files
+        
+#       - name: Install dependencies
+#         if: steps.cache.outputs.cache-hit != 'true' 
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install git golang-go gcc build-essential
+          
+#       - name: Build utils
+#         if: steps.cache.outputs.cache-hit != 'true' 
+#         run: |
+#           git clone https://gitlab.com/exercisetests/utils.git
+#           cd utils
+#           g++ clearscreen.cpp -o clearscreen
+#           g++ printbanner.cpp -o printbanner 
+#           g++ printMessage.cpp -o printMessage
+#           chmod +x clearscreen
+#           chmod +x printbanner
+#           chmod +x printMessage
+          
+#           mv clearscreen ..
+#           mv printbanner ..
+#           mv printMessage ..
+#           mv CodesToMessages.csv ..
+#           cd ..
+          
+#       - name: Build files verifier
+#         if: steps.cache.outputs.cache-hit != 'true' 
+#         run: |  
+#           git clone https://gitlab.com/exercisetests/verifysubmittedfiles.git
+#           cd verifysubmittedfiles
+#           go build .
+#           chmod +x filesverifier
+#           mv filesverifier ..
+#           cd ..      
+  
+#       - name: Clone exercise test repo
+#         run: |
+#           mkdir checkers
+#           git clone https://gitlab.com/exercisetests/ex0files.git
+#           cd ex0files
+#           mv PreSubmissionChecker.txt ../checkers          
+#           cd ..
+  
+#       ## This step stores the executable files in cache ##
+      
+#       - name: Cache compiled files
+#         if: steps.cache.outputs.cache-hit != 'true' 
+#         uses: actions/cache@v3
+#         with:
+#           path: |
+#             filesverifier
+#             valgrindverifier
+#             clearscreen
+#             printMessage
+#             printbanner
+#             CodesToMessages.csv
+#           key: ${{ runner.os }}-test-files
+          
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: pipeline-tools
+#           path: checkers            
+
+#   verify-vs-files:
+    
+
+#     needs: build-pipeline-tools  
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Download artifacts
+#       uses: actions/download-artifact@v3
+#       with:
+#         name: pipeline-tools
+
+#     - name: Restore cloned files
+#       uses: actions/cache@v3
+#       with:  
+#         path: |
+#           filesverifier
+#           valgrindverifier
+#           clearscreen
+#           printMessage
+#           printbanner
+#           CodesToMessages.csv
+#         key: ${{ runner.os }}-test-files 
+#         restore-keys: |
+#           ${{ runner.os }}-test-files 
+        
+#     - name: Verify Vs files
+#       run: |
+#         ./clearscreen 50  
+#         ./printbanner
+#         echo "Verifying required VS files..."
+#         ./filesverifier PreSubmissionChecker.txt 2
+#         echo "Verifying required VS files..."
+  
+#   verify-excluded-files:
+#       needs: build-pipeline-tools  
+#       runs-on: ubuntu-latest
+#       steps:
+#       - uses: actions/checkout@v3
+#       - name: Download artifacts
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: pipeline-tools
+
+#       - name: Restore cloned files
+#         uses: actions/cache@v3
+#         with:  
+#           path: |
+#            filesverifier
+#             valgrindverifier
+#             clearscreen
+#             printMessage
+#             printbanner
+#             CodesToMessages.csv
+#           key: ${{ runner.os }}-test-files 
+#           restore-keys: |
+#             ${{ runner.os }}-test-files 
+
+#       - name: verify-excluded-files
+#         run: |
+#           ./clearscreen 50
+#           ./printbanner
+#           echo "Verifying files that should not be submitted..."
+#           ./filesverifier PreSubmissionChecker.txt 4
+#           echo "Excluded files ok"
+
+
+
+
+
+name: Ex0 - GIT and VS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-pipeline-tools:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Restore cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            filesverifier
+            valgrindverifier
+            clearscreen
+            printMessage
+            printbanner
+            CodesToMessages.csv
+          key: ${{ runner.os }}-test-files
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git golang-go gcc build-essential
+
+      - name: Build utils
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git clone https://gitlab.com/exercisetests/utils.git
+          cd utils
+          g++ clearscreen.cpp -o clearscreen
+          g++ printbanner.cpp -o printbanner
+          g++ printMessage.cpp -o printMessage
+          chmod +x clearscreen printbanner printMessage
+          mv clearscreen ..
+          mv printbanner ..
+          mv printMessage ..
+          mv CodesToMessages.csv ..
+          cd ..
+
+      - name: Build files verifier
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git clone https://gitlab.com/exercisetests/verifysubmittedfiles.git
+          cd verifysubmittedfiles
+          go build .
+          chmod +x filesverifier
+          mv filesverifier ..
+          cd ..
+
+      - name: Clone exercise test repo
+        run: |
+          mkdir -p checkers
+          git clone https://gitlab.com/exercisetests/ex0files.git
+          cd ex0files
+          mv PreSubmissionChecker.txt ../checkers
+          cd ..
+
+      - name: Cache compiled files
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v3
+        with:
+          path: |
+            filesverifier
+            valgrindverifier
+            clearscreen
+            printMessage
+            printbanner
+            CodesToMessages.csv
+          key: ${{ runner.os }}-test-files
+
+      - name: Upload pipeline tools artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-tools
+          path: checkers
+
+  verify-vs-files:
+    needs: build-pipeline-tools
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download pipeline tools artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pipeline-tools
+          path: checkers
+
+      - name: Restore cached tools
+        uses: actions/cache@v3
+        with:
+          path: |
+            filesverifier
+            valgrindverifier
+            clearscreen
+            printMessage
+            printbanner
+            CodesToMessages.csv
+          key: ${{ runner.os }}-test-files
+          restore-keys: |
+            ${{ runner.os }}-test-files
+
+      - name: Verify VS files
+        run: |
+          ./clearscreen 50
+          ./printbanner
+          echo "Verifying required VS files..."
+          ./filesverifier checkers/PreSubmissionChecker.txt 2
+          echo "Verifying required VS files..."
+
+  verify-excluded-files:
+    needs: build-pipeline-tools
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download pipeline tools artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pipeline-tools
+          path: checkers
+
+      - name: Restore cached tools
+        uses: actions/cache@v3
+        with:
+          path: |
+            filesverifier
+            valgrindverifier
+            clearscreen
+            printMessage
+            printbanner
+            CodesToMessages.csv
+          key: ${{ runner.os }}-test-files
+          restore-keys: |
+            ${{ runner.os }}-test-files
+
+      - name: Verify excluded files
+        run: |
+          ./clearscreen 50
+          ./printbanner
+          echo "Verifying files that should not be submitted..."
+          ./filesverifier checkers/PreSubmissionChecker.txt 4
+          echo "Excluded files ok"
+ 
+ 

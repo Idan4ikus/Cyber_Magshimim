@@ -1,0 +1,2 @@
+﻿Source1.obj : error LNK2005: "void __cdecl hello(void)" (?hello@@YAXXZ) already defined in Source.obj
+C:\Users\Cyber_Magshimim\Desktop\EkronotExercises\DataStracture\x64\Debug\TEst1.exe : fatal error LNK1169: one or more multiply defined symbols found

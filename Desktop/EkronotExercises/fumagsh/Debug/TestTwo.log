@@ -1,0 +1,6 @@
+﻿  Part1Tester.cpp
+C:\Users\Cyber_Magshimim\Downloads\Part1Tester.cpp(17,10): warning C4005: 'PURPLE': macro redefinition
+      C:\Users\Cyber_Magshimim\Downloads\Part1Tester.cpp(11,10):
+      see previous definition of 'PURPLE'
+  
+  TestTwo.vcxproj -> C:\Users\Cyber_Magshimim\Desktop\EkronotExercises\ex0\TestTwo\x64\Debug\TestTwo.exe

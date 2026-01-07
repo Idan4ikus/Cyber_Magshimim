@@ -1,3 +1,0 @@
-﻿  Source.cpp
-C:\Users\Cyber_Magshimim\Desktop\EkronotExercises\TestTwo\Source.cpp(5,6): warning C4326: return type of 'main' should be 'int' instead of 'void'
-  TestTwo.vcxproj -> C:\Users\Cyber_Magshimim\Desktop\EkronotExercises\TestTwo\x64\Debug\TestTwo.exe

@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "..\\TEst1\\TEst1.vcxproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

@@ -1,0 +1,119 @@
+# =========================
+# Visual Studio
+# =========================
+.vs/
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.cachefile
+
+# =========================
+# Build directories
+# =========================
+Debug/
+Release/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+ipch/
+
+# =========================
+# Compiled objects
+# =========================
+*.obj
+*.pch
+*.pdb
+*.idb
+*.ilk
+*.tlog
+*.log
+*.lastbuildstate
+*.cache
+*.dmp
+
+# =========================
+# Binaries
+# =========================
+*.exe
+*.dll
+*.lib
+*.exp
+*.appx
+*.appxrecipe
+*.vsix
+*.msi
+*.msix
+*.msixupload
+*.msixbundle
+*.nupkg
+
+# =========================
+# Libraries / packages
+# =========================
+packages/
+*.pri
+*.lib
+
+# =========================
+# Other VS stuff
+# =========================
+*.ipch
+*.iobj
+*.ipdb
+*.sbr
+*.db
+*.opendb
+
+# =========================
+# CMake (אם אתה משתמש)
+# =========================
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+CMakeScripts/
+Testing/
+_install/
+
+# =========================
+# Qt Creator build dirs
+# =========================
+build*/
+*.pro.user
+*.qbs.user
+*.qmlc
+*.jsc
+
+# =========================
+# Backup / temp
+# =========================
+*~
+*.tmp
+*.temp
+*.bak
+*.old
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS-specific
+# =========================
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*.swp
+*.swo
